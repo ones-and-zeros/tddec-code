@@ -58,3 +58,8 @@ void LedDriver_TurnOff(uint16_t ledNumber)
     *ledAddress = 0;
 }
 
+void LedDriver_TurnAllOn(void)
+{
+    *ledAddress = 0xFFFF;
+}
+
