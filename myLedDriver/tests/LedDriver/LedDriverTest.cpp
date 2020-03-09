@@ -50,3 +50,9 @@ TEST(LedDriver, TurnOnLedOne)
     CHECK_EQUAL(1, virtualLeds);
 }
 
+TEST(LedDriver, TurnOffLedOne)
+{
+    LedDriver_TurnOff(1);
+    CHECK_EQUAL(0, virtualLeds);
+}
+
