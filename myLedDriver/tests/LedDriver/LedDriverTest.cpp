@@ -25,9 +25,10 @@ extern "C"
 
 TEST_GROUP(LedDriver)
 {
+    uint16_t virtualLeds=0xFFFF;
     void setup()
     {
-      LedDriver_Create();
+      LedDriver_Create(&virtualLeds);
     }
 
     void teardown()
@@ -36,8 +37,10 @@ TEST_GROUP(LedDriver)
     }
 };
 
-TEST(LedDriver, Create)
+TEST(LedDriver, LedsOffAfterCreate)
 {
-//  FAIL("Start here");
+    virtualLeds=0xFFFF;
+    LedDriver_Create(&virtualLeds);
+    CHECK_EQUAL(0, virtualLeds);
 }
 

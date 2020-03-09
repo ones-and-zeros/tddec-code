@@ -24,6 +24,7 @@
 /*-    www.renaissancesoftware.net james@renaissancesoftware.net       -*/
 /*- ------------------------------------------------------------------ -*/
 
+#include <stdint.h>
 #include "unity_fixture.h"
 #include "LedDriver.h"
 
@@ -39,7 +40,9 @@ TEST_TEAR_DOWN(LedDriver)
 {
 }
 
-TEST(LedDriver, StartHere)
+TEST(LedDriver, LedsOffAfterCreate)
 {
-/*    TEST_FAIL("Start here"); */
+    uint16_t virtualLeds = 0xFFFF;
+    LedDriver_Create(&virtualLeds);
+    TEST_ASSERT_EQUAL(0, virtualLeds);
 }
