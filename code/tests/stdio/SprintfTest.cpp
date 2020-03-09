@@ -63,6 +63,63 @@ TEST(sprintf, InsertString)
     expect("Hello World\n");
     given(sprintf(output, "Hello %s\n", "World"));
 }
+
+TEST(sprintf, UnsignedVal)
+{
+    uint16_t u16_var = 1234; 
+
+    expect("Ok, 1234\n");
+    given(sprintf(output, "Ok, %u\n", u16_var));
+}
+
+TEST(sprintf, SignedValPositive)
+{
+    int16_t i16_var = 1234; 
+
+    expect("Ok, 1234\n");
+    given(sprintf(output, "Ok, %i\n", i16_var));
+}
+
+TEST(sprintf, SignedValNegative)
+{
+    int16_t i16_var = -1234; 
+
+    expect("Ok, -1234\n");
+    given(sprintf(output, "Ok, %i\n", i16_var));
+}
+
+TEST(sprintf, FloatValPositive)
+{
+    float floatVal = 1.2; 
+
+    expect("Ok, 1.200000\n");
+    given(sprintf(output, "Ok, %f\n", floatVal));
+}
+
+TEST(sprintf, FloatValPositive2)
+{
+    float floatVal = 1.2345; 
+
+    expect("Ok, 1.234500\n");
+    given(sprintf(output, "Ok, %f\n", floatVal));
+}
+
+TEST(sprintf, FloatValNegative)
+{
+    float floatVal = -1.2; 
+
+    expect("Ok, -1.200000\n");
+    given(sprintf(output, "Ok, %f\n", floatVal));
+}
+
+TEST(sprintf, FloatValNegative2)
+{
+    float floatVal = -1.2345; 
+
+    expect("Ok, -1.234500\n");
+    given(sprintf(output, "Ok, %f\n", floatVal));
+}
+
 //END: RefactoredTests
 
 #else //START: Duplication
