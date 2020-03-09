@@ -28,21 +28,26 @@
 #include <stdlib.h>
 #include <memory.h>
 
-uint16_t *ledAddress = 0;
-uint16_t ledImage = 0;
+enum {ALL_LEDS_ON=~0, ALL_LEDS_OFF=~ALL_LEDS_ON};
 
+uint16_t *_pLedAddress = 0;
+uint16_t _ledImage = 0;
 
-static uint16_t convertLedNumberToBit(uint16_t ledNumber)
+static uint16_t _convertLedNumberToBit(uint16_t ledNumber)
 {
     return 1 << (ledNumber-1);
 }
 
+static void _updateHardware(void)
+{
+    *_pLedAddress = _ledImage;
+}
 
 void LedDriver_Create(uint16_t *address)
 {
-    ledAddress = address;
-    ledImage = 0;
-    *ledAddress = ledImage;
+    _pLedAddress = address;
+    _ledImage = ALL_LEDS_OFF;
+    _updateHardware();
 }
 
 void LedDriver_Destroy(void)
@@ -51,20 +56,19 @@ void LedDriver_Destroy(void)
 
 void LedDriver_TurnOn(uint16_t ledNumber)
 {
-    ledImage |= convertLedNumberToBit(ledNumber);
-    *ledAddress = ledImage;
+    _ledImage |= _convertLedNumberToBit(ledNumber);
+    _updateHardware();
 }
-
 
 void LedDriver_TurnOff(uint16_t ledNumber)
 {
-    ledImage &= ~convertLedNumberToBit(ledNumber);
-    *ledAddress = ledImage;
+    _ledImage &= ~_convertLedNumberToBit(ledNumber);
+    _updateHardware();
 }
 
 void LedDriver_TurnAllOn(void)
 {
-    ledImage = 0xFFFF;
-    *ledAddress = ledImage;
+    _ledImage = ALL_LEDS_ON;
+    _updateHardware();
 }
 
