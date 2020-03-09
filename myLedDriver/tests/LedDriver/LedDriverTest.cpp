@@ -44,3 +44,9 @@ TEST(LedDriver, LedsOffAfterCreate)
     CHECK_EQUAL(0, virtualLeds);
 }
 
+TEST(LedDriver, TurnOnLedOne)
+{
+    LedDriver_TurnOn(1);
+    CHECK_EQUAL(1, virtualLeds);
+}
+

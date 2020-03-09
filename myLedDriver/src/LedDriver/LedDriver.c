@@ -28,13 +28,22 @@
 #include <stdlib.h>
 #include <memory.h>
 
+uint16_t *ledAddress = 0;
+
 void LedDriver_Create(uint16_t *address)
 {
-    *address=0;
+    ledAddress = address;
+    *ledAddress = 0;
 }
 
 void LedDriver_Destroy(void)
 {
 }
+
+void LedDriver_TurnOn(uint16_t ledNumber)
+{
+    *ledAddress = 1;
+}
+
 
 
