@@ -45,7 +45,7 @@ TEST_TEAR_DOWN(LedDriver)
 
 TEST(LedDriver, LedsOffAfterCreate)
 {
-    virtualLeds = 0xFFFF;
+    LedDriver_TurnAllOn();
     LedDriver_Create(&virtualLeds);
     TEST_ASSERT_EQUAL(0, virtualLeds);
 }
@@ -82,4 +82,12 @@ TEST(LedDriver, TurnOffAnyLed)
     LedDriver_TurnOff(8);
     TEST_ASSERT_EQUAL_HEX16(0xFF7F, virtualLeds);
 }
+
+TEST(LedDriver, ledMemoryIsNotReadable)
+{
+    virtualLeds = 0xFFFF;
+    LedDriver_TurnOn(8);
+    TEST_ASSERT_EQUAL_HEX16(0x80, virtualLeds);
+}
+
 

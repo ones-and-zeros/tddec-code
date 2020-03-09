@@ -29,6 +29,7 @@
 #include <memory.h>
 
 uint16_t *ledAddress = 0;
+uint16_t ledImage = 0;
 
 
 static uint16_t convertLedNumberToBit(uint16_t ledNumber)
@@ -40,7 +41,8 @@ static uint16_t convertLedNumberToBit(uint16_t ledNumber)
 void LedDriver_Create(uint16_t *address)
 {
     ledAddress = address;
-    *ledAddress = 0;
+    ledImage = 0;
+    *ledAddress = ledImage;
 }
 
 void LedDriver_Destroy(void)
@@ -49,17 +51,20 @@ void LedDriver_Destroy(void)
 
 void LedDriver_TurnOn(uint16_t ledNumber)
 {
-    *ledAddress |= convertLedNumberToBit(ledNumber);
+    ledImage |= convertLedNumberToBit(ledNumber);
+    *ledAddress = ledImage;
 }
 
 
 void LedDriver_TurnOff(uint16_t ledNumber)
 {
-    *ledAddress &= ~convertLedNumberToBit(ledNumber);
+    ledImage &= ~convertLedNumberToBit(ledNumber);
+    *ledAddress = ledImage;
 }
 
 void LedDriver_TurnAllOn(void)
 {
-    *ledAddress = 0xFFFF;
+    ledImage = 0xFFFF;
+    *ledAddress = ledImage;
 }
 
