@@ -97,7 +97,7 @@ TEST(LedDriver, UpperAndLowerBounds)
     TEST_ASSERT_EQUAL_HEX16(0x8001, virtualLeds);
 }
 
-TEST(LedDriver, OutOfBounds)
+TEST(LedDriver, OutOfBoundsTurnOnChangesNothing)
 {
     LedDriver_TurnOn(-1);
     LedDriver_TurnOn(0);
@@ -105,5 +105,16 @@ TEST(LedDriver, OutOfBounds)
     LedDriver_TurnOn(33);
     LedDriver_TurnOn(3141);
     TEST_ASSERT_EQUAL_HEX16(0, virtualLeds);
+}
+
+TEST(LedDriver, OutOfBoundsTurnOffChangesNothing)
+{
+    LedDriver_TurnAllOn();
+    LedDriver_TurnOff(-1);
+    LedDriver_TurnOff(0);
+    LedDriver_TurnOff(17);
+    LedDriver_TurnOff(33);
+    LedDriver_TurnOff(3141);
+    TEST_ASSERT_EQUAL_HEX16(0xFFFF, virtualLeds);
 }
 
