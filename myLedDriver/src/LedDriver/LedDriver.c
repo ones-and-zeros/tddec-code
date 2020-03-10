@@ -56,14 +56,20 @@ void LedDriver_Destroy(void)
 
 void LedDriver_TurnOn(uint16_t ledNumber)
 {
-    _ledImage |= _convertLedNumberToBit(ledNumber);
-    _updateHardware();
+    if( (ledNumber>=1) && (ledNumber<=16) )
+    {
+        _ledImage |= _convertLedNumberToBit(ledNumber);
+        _updateHardware();
+    }
 }
 
 void LedDriver_TurnOff(uint16_t ledNumber)
 {
-    _ledImage &= ~_convertLedNumberToBit(ledNumber);
-    _updateHardware();
+    if( (ledNumber>=1) && (ledNumber<=16) )
+    {
+        _ledImage &= ~_convertLedNumberToBit(ledNumber);
+        _updateHardware();
+    }
 }
 
 void LedDriver_TurnAllOn(void)
