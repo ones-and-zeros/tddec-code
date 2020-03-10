@@ -96,6 +96,7 @@ TEST(LedDriver, OutOfBounds)
     LedDriver_TurnOn(-1);
     LedDriver_TurnOn(0);
     LedDriver_TurnOn(17);
+    LedDriver_TurnOn(33);
     LedDriver_TurnOn(3141);
     CHECK_EQUAL(0, virtualLeds);
 }
