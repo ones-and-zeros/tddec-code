@@ -129,11 +129,11 @@ TEST(LedDriver, OutOfBoundsProducesRuntimeError)
     STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
     CHECK_EQUAL(17, RuntimeErrorStub_GetLastParameter());
 
-    LedDriver_TurnOn(65535);
+    LedDriver_TurnOff(65535);
     STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
     CHECK_EQUAL(65535, RuntimeErrorStub_GetLastParameter());
 
-    LedDriver_TurnOn(-5);
+    LedDriver_TurnOff(-5);
     STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
     CHECK_EQUAL(-5, (int16_t)RuntimeErrorStub_GetLastParameter()); //casted, since LedDriver_TurnOn() parameter is uint16_t
 }

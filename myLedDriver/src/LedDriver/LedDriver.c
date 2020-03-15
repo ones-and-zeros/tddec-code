@@ -28,8 +28,10 @@
 #include "RuntimeError.h"
 #include <stdlib.h>
 #include <memory.h>
+#include <stdbool.h>
 
 enum {ALL_LEDS_ON=~0, ALL_LEDS_OFF=~ALL_LEDS_ON};
+enum {LED_FIRST=1, LED_LAST=16};
 
 uint16_t *_pLedAddress = 0;
 uint16_t _ledImage = 0;
@@ -37,6 +39,22 @@ uint16_t _ledImage = 0;
 static uint16_t _convertLedNumberToBit(uint16_t ledNumber)
 {
     return 1 << (ledNumber-1);
+}
+
+static bool _isLedInBounds(uint16_t ledNumber)
+{
+    bool returnVal;
+    if( ledNumber>=LED_FIRST && ledNumber<=LED_LAST )
+    {
+        returnVal = true;
+    }
+    else
+    {
+        returnVal = false;
+        RUNTIME_ERROR("LED Driver: out-of-bounds LED", ledNumber);
+    }
+
+    return returnVal;
 }
 
 static void _updateHardware(void)
@@ -57,21 +75,16 @@ void LedDriver_Destroy(void)
 
 void LedDriver_TurnOn(uint16_t ledNumber)
 {
-    if( (ledNumber>=1) && (ledNumber<=16) )
+    if( _isLedInBounds(ledNumber) )
     {
         _ledImage |= _convertLedNumberToBit(ledNumber);
         _updateHardware();
     }
-    else
-    {
-        RUNTIME_ERROR("LED Driver: out-of-bounds LED", ledNumber);
-    }
-
 }
 
 void LedDriver_TurnOff(uint16_t ledNumber)
 {
-    if( (ledNumber>=1) && (ledNumber<=16) )
+    if( _isLedInBounds(ledNumber) )
     {
         _ledImage &= ~_convertLedNumberToBit(ledNumber);
         _updateHardware();
