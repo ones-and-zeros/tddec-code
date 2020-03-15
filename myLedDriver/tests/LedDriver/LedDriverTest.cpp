@@ -160,3 +160,18 @@ TEST(LedDriver, OutOfBoundsLedsAreAlwaysOff)
     CHECK_TRUE(LedDriver_IsOff(17));
 }
 
+TEST(LedDriver, TurnOffMultipleLeds)
+{
+    LedDriver_TurnAllOn();
+    LedDriver_TurnOff(9);
+    LedDriver_TurnOff(8);
+    CHECK_EQUAL((~0x180)&0xFFFF, virtualLeds);
+}
+
+TEST(LedDriver, TurnAllOff)
+{
+    LedDriver_TurnAllOn();
+    LedDriver_TurnAllOff();
+    CHECK_EQUAL(0, virtualLeds);
+}
+

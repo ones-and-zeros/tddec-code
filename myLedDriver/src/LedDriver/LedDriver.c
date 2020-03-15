@@ -106,6 +106,12 @@ void LedDriver_TurnAllOn(void)
     _updateHardware();
 }
 
+void LedDriver_TurnAllOff(void)
+{
+    _ledImage = ALL_LEDS_OFF;
+    _updateHardware();
+}
+
 bool LedDriver_IsOn(uint16_t ledNumber)
 {
     bool returnVal = false;
