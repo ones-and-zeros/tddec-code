@@ -138,3 +138,10 @@ TEST(LedDriver, OutOfBoundsProducesRuntimeError)
     CHECK_EQUAL(-5, (int16_t)RuntimeErrorStub_GetLastParameter()); //casted, since LedDriver_TurnOn() parameter is uint16_t
 }
 
+TEST(LedDriver, IsOn)
+{
+    CHECK_FALSE(LedDriver_IsOn(11));
+    LedDriver_TurnOn(11);
+    CHECK_TRUE(LedDriver_IsOn(11));
+}
+

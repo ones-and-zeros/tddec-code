@@ -28,7 +28,6 @@
 #include "RuntimeError.h"
 #include <stdlib.h>
 #include <memory.h>
-#include <stdbool.h>
 
 enum {ALL_LEDS_ON=~0, ALL_LEDS_OFF=~ALL_LEDS_ON};
 enum {LED_FIRST=1, LED_LAST=16};
@@ -107,3 +106,7 @@ void LedDriver_TurnAllOn(void)
     _updateHardware();
 }
 
+bool LedDriver_IsOn(uint16_t ledNumber)
+{
+    return _ledImage & _convertLedNumberToBit(ledNumber);
+}
