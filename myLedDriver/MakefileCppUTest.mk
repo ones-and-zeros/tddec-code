@@ -19,11 +19,14 @@ SRC_DIRS = \
 TEST_SRC_DIRS = \
 	tests\
 	tests/*\
+	mocks\
 
 INCLUDE_DIRS =\
   .\
   $(CPPUTEST_HOME)/include\
   $(PROJECT_HOME_DIR)/include/LedDriver\
+  $(PROJECT_HOME_DIR)/mocks\
+  $(PROJECT_HOME_DIR)/include/util\
 
 include ../CppUTestCompileFlags.mk
 include $(CPPUTEST_HOME)/build/MakefileWorker.mk

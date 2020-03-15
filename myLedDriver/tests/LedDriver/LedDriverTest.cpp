@@ -18,10 +18,12 @@
 
 extern "C"
 {
+#include "RuntimeErrorStub.h"
 #include "LedDriver.h"
 }
 
 #include "CppUTest/TestHarness.h"
+
 
 TEST_GROUP(LedDriver)
 {
@@ -110,5 +112,29 @@ TEST(LedDriver, OutOfBoundsTurnOffChangesNothing)
     LedDriver_TurnOff(33);
     LedDriver_TurnOff(3141);
     CHECK_EQUAL(0xFFFF, virtualLeds);
+}
+
+IGNORE_TEST(LedDriver, OutOfBoundsToDo)
+{
+    /* TODO: what should we do during runtime? */
+}
+
+TEST(LedDriver, OutOfBoundsProducesRuntimeError)
+{
+    LedDriver_TurnOn(0);
+    STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
+    CHECK_EQUAL(0, RuntimeErrorStub_GetLastParameter());
+
+    LedDriver_TurnOn(17);
+    STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
+    CHECK_EQUAL(17, RuntimeErrorStub_GetLastParameter());
+
+    LedDriver_TurnOn(65535);
+    STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
+    CHECK_EQUAL(65535, RuntimeErrorStub_GetLastParameter());
+
+    LedDriver_TurnOn(-5);
+    STRCMP_EQUAL("LED Driver: out-of-bounds LED", RuntimeErrorStub_GetLastError());
+    CHECK_EQUAL(-5, (int16_t)RuntimeErrorStub_GetLastParameter()); //casted, since LedDriver_TurnOn() parameter is uint16_t
 }
 

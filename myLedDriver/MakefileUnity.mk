@@ -18,6 +18,7 @@ SRC_DIRS = \
 TEST_SRC_DIRS = \
 	$(PROJECT_HOME_DIR)/unity\
 	$(PROJECT_HOME_DIR)/unity/LedDriver\
+	$(PROJECT_HOME_DIR)/mocks\
 	$(UNITY_HOME)/src\
     $(UNITY_HOME)/extras/fixture/src\
     $(UNITY_HOME)/extras/fixture/test\
@@ -29,5 +30,7 @@ INCLUDE_DIRS =\
   $(UNITY_HOME)/extras/fixture/src\
   $(UNITY_HOME)/extras/fixture/test\
   $(PROJECT_HOME_DIR)/include/LedDriver\
+  $(PROJECT_HOME_DIR)/mocks\
+  $(PROJECT_HOME_DIR)/include/util\
 
 include $(UNITY_BUILD_HOME)/MakefileWorker.mk

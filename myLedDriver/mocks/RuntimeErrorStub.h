@@ -24,63 +24,13 @@
 /*-    www.renaissancesoftware.net james@renaissancesoftware.net       -*/
 /*- ------------------------------------------------------------------ -*/
 
-#include "LedDriver.h"
+#ifndef D_RuntimeErrorStub_H
+#define D_RuntimeErrorStub_H
+
 #include "RuntimeError.h"
-#include <stdlib.h>
-#include <memory.h>
 
-enum {ALL_LEDS_ON=~0, ALL_LEDS_OFF=~ALL_LEDS_ON};
+void RuntimeErrorStub_Reset(void);
+const char * RuntimeErrorStub_GetLastError(void);
+int RuntimeErrorStub_GetLastParameter(void);
 
-uint16_t *_pLedAddress = 0;
-uint16_t _ledImage = 0;
-
-static uint16_t _convertLedNumberToBit(uint16_t ledNumber)
-{
-    return 1 << (ledNumber-1);
-}
-
-static void _updateHardware(void)
-{
-    *_pLedAddress = _ledImage;
-}
-
-void LedDriver_Create(uint16_t *address)
-{
-    _pLedAddress = address;
-    _ledImage = ALL_LEDS_OFF;
-    _updateHardware();
-}
-
-void LedDriver_Destroy(void)
-{
-}
-
-void LedDriver_TurnOn(uint16_t ledNumber)
-{
-    if( (ledNumber>=1) && (ledNumber<=16) )
-    {
-        _ledImage |= _convertLedNumberToBit(ledNumber);
-        _updateHardware();
-    }
-    else
-    {
-        RUNTIME_ERROR("LED Driver: out-of-bounds LED", ledNumber);
-    }
-
-}
-
-void LedDriver_TurnOff(uint16_t ledNumber)
-{
-    if( (ledNumber>=1) && (ledNumber<=16) )
-    {
-        _ledImage &= ~_convertLedNumberToBit(ledNumber);
-        _updateHardware();
-    }
-}
-
-void LedDriver_TurnAllOn(void)
-{
-    _ledImage = ALL_LEDS_ON;
-    _updateHardware();
-}
-
+#endif
