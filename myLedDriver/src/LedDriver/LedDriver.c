@@ -57,6 +57,16 @@ static bool _isLedInBounds(uint16_t ledNumber)
     return returnVal;
 }
 
+static void _setLedImageBit(uint16_t ledNumber)
+{
+    _ledImage |= _convertLedNumberToBit(ledNumber);
+}
+
+static void _clearLedImageBit(uint16_t ledNumber)
+{
+    _ledImage &= ~_convertLedNumberToBit(ledNumber);
+}
+
 static void _updateHardware(void)
 {
     *_pLedAddress = _ledImage;
@@ -77,7 +87,7 @@ void LedDriver_TurnOn(uint16_t ledNumber)
 {
     if( _isLedInBounds(ledNumber) )
     {
-        _ledImage |= _convertLedNumberToBit(ledNumber);
+        _setLedImageBit(ledNumber);
         _updateHardware();
     }
 }
@@ -86,7 +96,7 @@ void LedDriver_TurnOff(uint16_t ledNumber)
 {
     if( _isLedInBounds(ledNumber) )
     {
-        _ledImage &= ~_convertLedNumberToBit(ledNumber);
+        _clearLedImageBit(ledNumber);
         _updateHardware();
     }
 }
