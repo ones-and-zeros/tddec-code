@@ -108,5 +108,10 @@ void LedDriver_TurnAllOn(void)
 
 bool LedDriver_IsOn(uint16_t ledNumber)
 {
-    return _ledImage & _convertLedNumberToBit(ledNumber);
+    bool returnVal = false;
+    if( _isLedInBounds(ledNumber) )
+    {
+        returnVal = (_ledImage & _convertLedNumberToBit(ledNumber));
+    }
+    return returnVal;
 }
