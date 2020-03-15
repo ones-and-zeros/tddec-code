@@ -115,3 +115,16 @@ bool LedDriver_IsOn(uint16_t ledNumber)
     }
     return returnVal;
 }
+
+bool LedDriver_IsOff(uint16_t ledNumber)
+{
+    bool returnVal = true;
+    if( _isLedInBounds(ledNumber) )
+    {
+        returnVal = (~_ledImage & _convertLedNumberToBit(ledNumber));
+    }
+
+    returnVal = returnVal;
+
+    return returnVal;
+}
